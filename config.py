@@ -35,4 +35,6 @@ powerup_shrink = [["<"]]
 
 powerup_fireball = [["G"]]
 
+powerup_shoot = [["|"]]
+
 no_powerup = [[" "]]

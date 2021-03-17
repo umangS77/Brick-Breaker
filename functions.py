@@ -66,15 +66,15 @@ def create_board():
                         variables.powerups_index.append(x)
                         variables.powerups_index.append(x+1)
                         if j == 0:
-                            powerup = objects.PowerUp(config.powerup_fireball,x,y)
+                            powerup = objects.PowerUp(config.powerup_shoot,x,y)
                         elif j == 2:
-                            powerup = objects.PowerUp(config.powerup_fireball,x,y)
+                            powerup = objects.PowerUp(config.powerup_shoot,x,y)
                         elif j == 4:
-                            powerup = objects.PowerUp(config.powerup_fireball,x,y)
+                            powerup = objects.PowerUp(config.powerup_shoot,x,y)
                         elif j == 6:
-                            powerup = objects.PowerUp(config.powerup_fireball,x,y)
+                            powerup = objects.PowerUp(config.powerup_shoot,x,y)
                         elif j == 8:
-                            powerup = objects.PowerUp(config.powerup_fireball,x,y)
+                            powerup = objects.PowerUp(config.powerup_shoot,x,y)
                     # else:
                     #     powerup = objects.PowerUp(config.no_powerup,x,y)
                         variables.powerups.append(powerup)
@@ -312,8 +312,10 @@ def perform_powerup(powerup):
         # variables.ball.brick_collision = 0
         variables.FIREBALL_FLAG = 1
         variables.POWERUP_TIME_FIREBALL = variables.TIME_REM - variables.POWERUP_DURATION
-    elif powerup.get_type() == '=':
-        pass
+    elif powerup.get_type() == '|':
+        variables.SHOOT_FLAG = 1
+        variables.POWERUP_TIME_SHOOT = variables.TIME_REM - variables.POWERUP_DURATION
+        
     powerup.change_status_to_0()
 
 def check_powerup_timeout():
@@ -333,6 +335,9 @@ def check_powerup_timeout():
 
     if variables.POWERUP_TIME_FIREBALL == variables.TIME_REM or variables.LEVEL_CHANGE_FLAG == 1:
         variables.FIREBALL_FLAG = 0
+
+    if variables.POWERUP_TIME_SHOOT == variables.TIME_REM or variables.LEVEL_CHANGE_FLAG == 1:
+        variables.SHOOT_FLAG = 0
 
 def set_board():
     for i in range(4, variables.mp.height, 3):
@@ -537,7 +542,7 @@ def brick_fall():
     j = variables.mp.height - 7
     while(j > 9 and j < variables.mp.height - 6):
         for i in range(variables.mp.width):
-            if(variables.mp.matrix[j][i] != "O" or variables.mp.matrix[j][i] != "@" or variables.mp.matrix[j][i] != ">" or variables.mp.matrix[j][i] != "<" or variables.mp.matrix[j][i] != "?"or variables.mp.matrix[j][i] != "G"):
+            if(variables.mp.matrix[j][i] != "O" or variables.mp.matrix[j][i] != "@" or variables.mp.matrix[j][i] != ">" or variables.mp.matrix[j][i] != "<" or variables.mp.matrix[j][i] != "?" or variables.mp.matrix[j][i] != "G" or variables.mp.matrix[j][i] != "|"):
                 variables.mp.matrix[j+1][i] = variables.mp.matrix[j][i]
         j -= 1
 

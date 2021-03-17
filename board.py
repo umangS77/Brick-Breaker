@@ -176,7 +176,7 @@ class Map(object):
                 #     self.matrix[i-1][j-1] = "R"
                 #     self.matrix[i-1][j] = "0"                      
                         
-                elif self.matrix[i][j] == "O" or self.matrix[i][j] == "?" or self.matrix[i][j] == ">" or self.matrix[i][j] == "<" or self.matrix[i][j] == "@" or self.matrix[i][j] == "G":        
+                elif self.matrix[i][j] == "O" or self.matrix[i][j] == "?" or self.matrix[i][j] == ">" or self.matrix[i][j] == "<" or self.matrix[i][j] == "@" or self.matrix[i][j] == "G" or self.matrix[i][j] == "|":        
                     board.append(Style.BRIGHT+(self.matrix[i][j] + Style.RESET_ALL))
 
                 elif self.matrix[i][j] == "#":
@@ -189,7 +189,11 @@ class Map(object):
                         if i >= variables.paddle._posy:
                             if i < variables.paddle._posy + variables.paddle._height:
                                 z=0
-                                board.append(Fore.LIGHTCYAN_EX + Back.LIGHTCYAN_EX + (self.matrix[i][j] + Style.RESET_ALL))
+                                if variables.SHOOT_FLAG == 1 and  ((self.matrix[i][j] == "/" and (self.matrix[i][j-1] == " " or self.matrix[i][j-1] == "")) or (self.matrix[i][j] == "/" and (self.matrix[i][j+1] == " " or self.matrix[i][j+1] == ""))): 
+                                    board.append(Fore.LIGHTRED_EX + Back.LIGHTRED_EX + (self.matrix[i][j] + Style.RESET_ALL))
+                                else:
+                                    board.append(Fore.LIGHTCYAN_EX + Back.LIGHTCYAN_EX + (self.matrix[i][j] + Style.RESET_ALL))
+
 
 
 

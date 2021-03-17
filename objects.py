@@ -4,7 +4,6 @@ import functions
 import variables 
 import config
 
-
 class Object():
 
     def __init__(self, element, x, y):
@@ -122,13 +121,17 @@ class Ball(Object):
 
     def perform_fireball(self):
         if variables.FIREBALL_FLAG == 1:
+            file = open("test.txt", "w")
             start_y = int(self._posy)
             start_x = int(self._posx)
+            file.write("start_y = " + str(start_y) + "\nstart_x = " + str(start_x));
 
-            for jj in range(start_y - 4, start_y + 4):
-                for ii in range(start_x - 4, start_x + 4):
+            for jj in range(start_y - 5, start_y + 5,1):
+                for ii in range(start_x - 5, start_x + 5,1):
+                    file.write(str(jj) + "   "+ str(ii) + "\n")
                     variables.mp.matrix[int(jj)][int(ii)] = " "
                     variables.paddle.inc_score(1)
+            file.close()
 
     def check_collision(self): 
         
@@ -189,13 +192,14 @@ class Ball(Object):
             variables.mp.matrix[int(j+self._posy)+1][int(i+self._posx)+1] = " "
             variables.mp.matrix[int(j+self._posy)+1][int(i+self._posx)] = " "
             variables.paddle.inc_score(3)
+            self.perform_fireball()
 
             if variables.ball.brick_collision == 1:
                 if vy < 0 :
                     variables.ball.rev_vy()
                 else:
                     variables.ball.rev_vx()
-                self.perform_fireball()
+                # self.perform_fireball()
             else:
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = " "
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)+1] = " "
@@ -209,13 +213,14 @@ class Ball(Object):
             variables.mp.matrix[int(j+self._posy)+1][int(i+self._posx)-1] = " "
             variables.mp.matrix[int(j+self._posy)+1][int(i+self._posx)] = " "
             variables.paddle.inc_score(3)
+            self.perform_fireball()
 
             if variables.ball.brick_collision == 1:
                 if vy < 0:
                     variables.ball.rev_vy()
                 else:
                     variables.ball.rev_vx()
-                self.perform_fireball()
+                # self.perform_fireball()
             else:
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = " "
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)-1] = " "
@@ -230,13 +235,13 @@ class Ball(Object):
             variables.mp.matrix[int(j+self._posy)-1][int(i+self._posx)+1] = " "
             variables.mp.matrix[int(j+self._posy)-1][int(i+self._posx)] = " "
             variables.paddle.inc_score(3)
-
+            self.perform_fireball()
             if variables.ball.brick_collision == 1:
                 if vy > 0:
                     variables.ball.rev_vy()
                 else:
                     variables.ball.rev_vx()
-                self.perform_fireball()
+                # self.perform_fireball()
             else:
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = " "
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)+1] = " "
@@ -250,13 +255,13 @@ class Ball(Object):
             variables.mp.matrix[int(j+self._posy)-1][int(i+self._posx)-1] = " "
             variables.mp.matrix[int(j+self._posy)-1][int(i+self._posx)] = " "
             variables.paddle.inc_score(3)
-
+            self.perform_fireball()
             if variables.ball.brick_collision == 1:
                 if vy > 0:
                     variables.ball.rev_vy()
                 else:
                     variables.ball.rev_vx()
-                self.perform_fireball()
+                # self.perform_fireball()
             else:
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = " "
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)-1] = " "
@@ -265,6 +270,7 @@ class Ball(Object):
 
 
         elif variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] == "l":
+            self.perform_fireball()
             if variables.ball.brick_collision == 1:
                 if vy < 0 :
                     variables.ball.rev_vy()
@@ -276,7 +282,7 @@ class Ball(Object):
                 variables.mp.matrix[int(j+self._posy)+1][int(i+self._posx)+1] = "A"
                 variables.mp.matrix[int(j+self._posy)+1][int(i+self._posx)] = "N"
                 variables.paddle.inc_score(2)
-                self.perform_fireball()
+                # self.perform_fireball()
             else:
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = " "
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)+1] = " "
@@ -284,7 +290,7 @@ class Ball(Object):
                 variables.mp.matrix[int(j+self._posy)+1][int(i+self._posx)] = " "
 
         elif variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] == "e":
-            
+            self.perform_fireball()
             if variables.ball.brick_collision == 1:
                 if vy < 0:
                     variables.ball.rev_vy()
@@ -295,7 +301,7 @@ class Ball(Object):
                 variables.mp.matrix[int(j+self._posy)+1][int(i+self._posx)-1] = "N"
                 variables.mp.matrix[int(j+self._posy)+1][int(i+self._posx)] = "A"
                 variables.paddle.inc_score(2)
-                self.perform_fireball()
+                # self.perform_fireball()
             else:
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = " "
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)-1] = " "
@@ -303,6 +309,7 @@ class Ball(Object):
                 variables.mp.matrix[int(j+self._posy)+1][int(i+self._posx)] = " "
 
         elif variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] == "v":
+            self.perform_fireball()
             if variables.ball.brick_collision == 1:
                 if vy > 0:
                     variables.ball.rev_vy()
@@ -313,7 +320,7 @@ class Ball(Object):
                 variables.mp.matrix[int(j+self._posy)-1][int(i+self._posx)+1] = "I"
                 variables.mp.matrix[int(j+self._posy)-1][int(i+self._posx)] = "F"
                 variables.paddle.inc_score(2)
-                self.perform_fireball()
+                #self.perform_fireball()
             else:
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = " "
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)+1] = " "
@@ -321,6 +328,7 @@ class Ball(Object):
                 variables.mp.matrix[int(j+self._posy)-1][int(i+self._posx)] = " "
 
         elif variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] == "2":            
+            self.perform_fireball()
             if variables.ball.brick_collision == 1:
                 if vy > 0:
                     variables.ball.rev_vy()
@@ -331,7 +339,7 @@ class Ball(Object):
                 variables.mp.matrix[int(j+self._posy)-1][int(i+self._posx)-1] = "F"
                 variables.mp.matrix[int(j+self._posy)-1][int(i+self._posx)] = "I"
                 variables.paddle.inc_score(2)
-                self.perform_fireball()
+                # self.perform_fireball()
             else:
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = " "
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)-1] = " "
@@ -340,7 +348,7 @@ class Ball(Object):
                 
 
         elif variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] == "L":
-            
+            self.perform_fireball()
             variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = "l"
             variables.mp.matrix[int(j+self._posy)][int(i+self._posx)+1] = "e"
             variables.mp.matrix[int(j+self._posy)+1][int(i+self._posx)+1] = "2"
@@ -351,7 +359,7 @@ class Ball(Object):
                     variables.ball.rev_vy()
                 else:
                     variables.ball.rev_vx()
-                self.perform_fireball()
+                # self.perform_fireball()
             else:
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = " "
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)+1] = " "
@@ -359,7 +367,7 @@ class Ball(Object):
                 variables.mp.matrix[int(j+self._posy)+1][int(i+self._posx)] = " "
 
         elif variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] == "E":
-            
+            self.perform_fireball()
             variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = "e"
             variables.mp.matrix[int(j+self._posy)][int(i+self._posx)-1] = "l"
             variables.mp.matrix[int(j+self._posy)+1][int(i+self._posx)-1] = "v"
@@ -370,7 +378,7 @@ class Ball(Object):
                     variables.ball.rev_vy()
                 else:
                     variables.ball.rev_vx()
-                self.perform_fireball()
+                #self.perform_fireball()
             else:
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = " "
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)-1] = " "
@@ -379,7 +387,7 @@ class Ball(Object):
 
 
         elif variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] == "V":
-            
+            self.perform_fireball()
             variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = "v"
             variables.mp.matrix[int(j+self._posy)][int(i+self._posx)+1] = "2"
             variables.mp.matrix[int(j+self._posy)-1][int(i+self._posx)+1] = "e"
@@ -390,7 +398,7 @@ class Ball(Object):
                     variables.ball.rev_vy()
                 else:
                     variables.ball.rev_vx()
-                self.perform_fireball()
+                #self.perform_fireball()
             else:
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = " "
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)+1] = " "
@@ -398,7 +406,7 @@ class Ball(Object):
                 variables.mp.matrix[int(j+self._posy)-1][int(i+self._posx)] = " "
 
         elif variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] == "1":
-            
+            self.perform_fireball()
             variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = "2"
             variables.mp.matrix[int(j+self._posy)][int(i+self._posx)-1] = "v"
             variables.mp.matrix[int(j+self._posy)-1][int(i+self._posx)-1] = "l"
@@ -409,7 +417,7 @@ class Ball(Object):
                     variables.ball.rev_vy()
                 else:
                     variables.ball.rev_vx()
-                self.perform_fireball()
+                #self.perform_fireball()
             else:
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = " "
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)-1] = " "
@@ -417,7 +425,7 @@ class Ball(Object):
                 variables.mp.matrix[int(j+self._posy)-1][int(i+self._posx)] = " "
 
         elif variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] == "R":
-            
+            self.perform_fireball()
             variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = "R"
             variables.mp.matrix[int(j+self._posy)][int(i+self._posx)+1] = "0"
             variables.mp.matrix[int(j+self._posy)+1][int(i+self._posx)] = "C"
@@ -428,7 +436,7 @@ class Ball(Object):
                     variables.ball.rev_vy()
                 else:
                     variables.ball.rev_vx()
-                self.perform_fireball()
+                #self.perform_fireball()
             else:
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = " "
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)+1] = " "
@@ -442,12 +450,13 @@ class Ball(Object):
             variables.mp.matrix[int(j+self._posy)+1][int(i+self._posx)-1] = "C"
             variables.mp.matrix[int(j+self._posy)+1][int(i+self._posx)] = "K"
             # variables.paddle.inc_score(1)
+            self.perform_fireball()
             if variables.ball.brick_collision == 1:
                 if vy < 0:
                     variables.ball.rev_vy()
                 else:
                     variables.ball.rev_vx()
-                self.perform_fireball()
+                # self.perform_fireball()
             else:
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = " "
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)-1] = " "
@@ -459,6 +468,7 @@ class Ball(Object):
             
             
             # variables.paddle.inc_score(1)
+            self.perform_fireball()
             if variables.ball.brick_collision == 1:
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = "C"
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)+1] = "K"
@@ -468,7 +478,7 @@ class Ball(Object):
                     variables.ball.rev_vy()
                 else:
                     variables.ball.rev_vx()
-                self.perform_fireball()
+                # self.perform_fireball()
             else:
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = " "
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)+1] = " "
@@ -476,7 +486,7 @@ class Ball(Object):
                 variables.mp.matrix[int(j+self._posy)-1][int(i+self._posx)] = " "
 
         elif variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] == "K":
-            
+            self.perform_fireball()
             variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = "K"
             variables.mp.matrix[int(j+self._posy)][int(i+self._posx)-1] = "C"
             variables.mp.matrix[int(j+self._posy)-1][int(i+self._posx)-1] = "R"
@@ -487,7 +497,7 @@ class Ball(Object):
                     variables.ball.rev_vy()
                 else:
                     variables.ball.rev_vx()
-                self.perform_fireball()
+                # self.perform_fireball()
 
             else:
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = " "
@@ -603,6 +613,8 @@ class Paddle(Object):
         variables.POWERUP_TIME_THROUGH = -1
         variables.POWERUP_TIME_SHRINK = -1
         variables.POWERUP_TIME_EXPAND = -1
+        variables.POWERUP_TIME_FIREBALL = -1
+        variables.FIREBALL_FLAG = 0
 
         for p in variables.powerups:
             p.change_status_to_0()
@@ -711,4 +723,4 @@ class PowerUp(Object):
                 variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = self._shape[j][i]
 
 
-    
+# file.close()
