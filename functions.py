@@ -12,9 +12,13 @@ ch2 = ''
 
 
 def print_matrix():
+    temp = str(variables.TIME_REM - variables.POWERUP_TIME_SHOOT)
+    if (variables.POWERUP_TIME_SHOOT == variables.TIME_REM or variables.LEVEL_CHANGE_FLAG == 1 or variables.SHOOT_FLAG == 0):
+        temp = "Not activated"
+
     print("\033[2;1H" + Fore.YELLOW +  Style.BRIGHT + 
     ("LEVEL: " + str(variables.LEVEL) + "   |  LIVES: " + str(variables.paddle.get_lives()) + "   |  SCORE: " + str(variables.paddle.score())  + "   |  TIME REMAINING: " +str(variables.TIME_REM) +
-    "   |  Vx: " + str(variables.BALL_SPEED_X) + "   |  Vy: " + str(variables.BALL_SPEED_Y))  .center(config.columns), end='')
+    "   |  Vx: " + str(variables.BALL_SPEED_X) + "   |  Vy: " + str(variables.BALL_SPEED_Y)  + "   |  SHOOT_TIME_LEFT: " + temp)  .center(config.columns), end='')
     print(Style.RESET_ALL)
     variables.mp.render()
 
@@ -501,6 +505,7 @@ def check_ball_base():
         else:
             variables.ball.reset()
             variables.paddle.reset()
+            variables.SHOOT_FLAG = 0
             variables.BALL_SPEED_X = variables.ORG_BALL_SPEED_X
             variables.BALL_SPEED_Y = variables.ORG_BALL_SPEED_Y
 
@@ -554,3 +559,35 @@ def brick_fall():
         variables.mp.matrix[lower_lim][i] == "V" or variables.mp.matrix[lower_lim][i] == "1" or
         variables.mp.matrix[lower_lim][i] == "#"):
             exit_screen("Game over!")
+
+
+def shoot_bullets():
+    bullet1 = objects.Bullet(config.bullet, variables.paddle.x_coord(), variables.paddle.y_coord())
+    bullet2 = objects.Bullet(config.bullet, variables.paddle.x_coord() + variables.paddle.get_width(), variables.paddle.y_coord())
+    variables.bullets.append(bullet1)
+    variables.bullets.append(bullet2)
+    # file = open("shoot_test.txt", "a")
+    # file.write("\nshooting\n")
+    # file.write(str(bullet1.x_coord()))
+    # file.write(" " + str(bullet1.y_coord()) + "\n")
+    # file.write(str(bullet2.x_coord()))
+    # file.write(" " + str(bullet2.y_coord()) + "\n")
+    # file.close()
+
+
+
+
+def bullet_move(bullet):
+    bullet.clear()
+    bullet.check_collision()
+    if bullet.get_status() == 1:
+        bullet.y_change(-0.15)
+    bullet.render()
+    # file = open("shoot_test.txt", "a")
+    # file.write("\nmoving\n")
+    # file.write(str(bullet.x_coord()))
+    # file.write(" " + str(bullet.y_coord()) + "\n")
+    # file.write(str(bullet2.x_coord()))
+    # file.write(" " + str(bullet2.y_coord()) + "\n")
+    # file.close()
+

@@ -184,6 +184,9 @@ class Map(object):
                     lev_flag = 1
                     board.append(Back.WHITE + (self.matrix[i][j] + Style.RESET_ALL))
 
+                elif self.matrix[i][j] == ".":
+                    board.append(Fore.LIGHTRED_EX + (self.matrix[i][j] + Style.RESET_ALL))
+
                 elif variables.mp.start_index <= 981:
                     if j >= variables.paddle._posx and j < variables.paddle._posx +  variables.paddle.get_width():
                         if i >= variables.paddle._posy:

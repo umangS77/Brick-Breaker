@@ -1,4 +1,3 @@
-
 columns = 150
 rows = 50
 lives = 5
@@ -38,3 +37,5 @@ powerup_fireball = [["G"]]
 powerup_shoot = [["|"]]
 
 no_powerup = [[" "]]
+
+bullet = [["."]]

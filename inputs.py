@@ -80,6 +80,12 @@ def movedin():
     if char == 'p':
         variables.LEVEL_CHANGE_FLAG = 1
         functions.check_powerup_timeout()
+        variables.ball.reset()
+        variables.paddle.reset()
+
+
+    if char == 'x' and variables.SHOOT_FLAG == 1:
+        functions.shoot_bullets()
 
     
 

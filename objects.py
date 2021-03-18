@@ -34,7 +34,7 @@ class Object():
     def clear(self):
         for i in range(self._width):
             for j in range(self._height):
-                variables.mp.matrix[j+self._posy][i+self._posx] = " "
+                variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] = " "
 
     def render(self):
         for i in range(self._width):
@@ -598,6 +598,9 @@ class Paddle(Object):
     
     def inc_score(self, x):
         self.__score += x
+
+    def get_width(self):
+        return self._width
     
     
 
@@ -724,3 +727,36 @@ class PowerUp(Object):
 
 
 # file.close()
+
+
+class Bullet(Object):
+    def __init__(self,element,x,y):
+        super().__init__(element,x,y-2)
+        self._type = element[0][0]
+        self._status = 1
+
+    def get_status(self):
+        return self._status
+
+    def check_collision(self):
+        i = int(self._posy)
+        j = int(self._posx)
+
+        if(self.y_coord()<5):
+            self._status = 0
+            self.clear()
+
+        if((variables.mp.matrix[i-1][j] != " " and variables.mp.matrix[i-1][j] != "X" and variables.mp.matrix[i-1][j] != "O")):
+            variables.mp.matrix[i-1][j+1] = " "
+            variables.mp.matrix[i-1][j-1] = " "
+            variables.mp.matrix[i-1][j] = " "
+            variables.mp.matrix[i-2][j] = " "
+            variables.mp.matrix[i-2][j-1] = " "
+            variables.mp.matrix[i-2][j+1] = " "
+            variables.mp.matrix[i][j] = " "
+            variables.paddle.inc_score(5)
+            self._status = 0
+            self.clear()
+
+
+

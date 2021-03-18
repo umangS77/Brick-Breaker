@@ -41,6 +41,14 @@ while True:
             p.render()
             functions.powerup_fall(p)
 
+    for b in variables.bullets:
+    	if b.get_status() == 1 and p._type != ' ':
+    		b.render()
+    		functions.bullet_move(b)
+    	else:
+    		b.clear()
+
+
     functions.check_powerup_timeout()
     functions.print_matrix()
     
