@@ -57,6 +57,6 @@ powerups_index = []
 
 bricks = []
 
-
+bullets = []
 
 

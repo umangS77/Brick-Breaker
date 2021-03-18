@@ -35,6 +35,7 @@ def create_board():
     #         if(variables.mp.matrix[j][i] != 'O'):
     #             variables.mp.matrix[j][i]=''
 
+    os.system('aplay -q ./sounds/level_up.wav&')
     if level == 1:
         i = 4
         for y in range(19,23, 3):
@@ -183,6 +184,7 @@ def create_board():
                         variables.powerups.append(powerup)
             f += 1
     else:
+        os.system('aplay -q ./sounds/game_over.wav&')
         exit_screen("Game over!")
 
 
@@ -286,6 +288,10 @@ def ball_move(ball):
 def powerup_fall(powerup):
     if powerup.get_status() == 1:
         powerup.clear()
+        # temp = powerup.get_vy()
+        # powerup.y_change_under_gravity()
+        # powerup.x_change(powerup.get_vx())
+
         powerup.y_change(0.1)
         check_powerup(powerup)
         if(powerup.y_coord() > variables.paddle_base+1):
@@ -299,6 +305,7 @@ def check_powerup(powerup):
        perform_powerup(powerup) 
 
 def perform_powerup(powerup):
+    os.system('aplay -q ./sounds/powerup.wav&')
     if powerup.get_type() == '?':
         variables.BALL_SPEED_X += 0.1
         variables.BALL_SPEED_Y += 0.1
@@ -482,9 +489,12 @@ def clear_brick(x, y, ball):
 def check_ball_side():
     if variables.ball.x_coord()<=0:
         variables.ball.rev_vx()
+        os.system('aplay -q ./sounds/ball_hit.wav&')
 
     elif variables.ball.x_coord()>=variables.mp.start_index + config.columns:
         variables.ball.rev_vx()
+        os.system('aplay -q ./sounds/ball_hit.wav&')
+
 
 
 def check_ball_base():
@@ -498,14 +508,17 @@ def check_ball_base():
         variables.paddle.clear()
         variables.ball.clear()
         variables.paddle.dec_lives()
+        os.system('aplay -q ./sounds/lost_life.wav&')
         variables.BALL_SPEED_X = variables.ORG_BALL_SPEED_X
         variables.BALL_SPEED_Y = variables.ORG_BALL_SPEED_Y
         if variables.paddle.get_lives() <= 0:
+            os.system('aplay -q ./sounds/game_over.wav&')
             exit_screen("Lives over!!")
         else:
             variables.ball.reset()
             variables.paddle.reset()
             variables.SHOOT_FLAG = 0
+            os.system('aplay -q ./sounds/lost_life.wav&')
             variables.BALL_SPEED_X = variables.ORG_BALL_SPEED_X
             variables.BALL_SPEED_Y = variables.ORG_BALL_SPEED_Y
 
@@ -515,6 +528,7 @@ def check_ball_paddle_collision():
         variables.ball.rev_vy()
         # brick_fall()
         if variables.ball.get_status() == 1:
+            os.system('aplay -q ./sounds/ball_hit.wav&')
             # if variables.TIME_REM < variables.BRICK_FALL_TIME:
             #     brick_fall()
             if variables.ball.x_coord() < variables.paddle.x_coord() + 2:
@@ -558,6 +572,7 @@ def brick_fall():
         variables.mp.matrix[lower_lim][i] == "v" or variables.mp.matrix[lower_lim][i] == "2" or 
         variables.mp.matrix[lower_lim][i] == "V" or variables.mp.matrix[lower_lim][i] == "1" or
         variables.mp.matrix[lower_lim][i] == "#"):
+            os.system('aplay -q ./sounds/game_over.wav&')
             exit_screen("Game over!")
 
 

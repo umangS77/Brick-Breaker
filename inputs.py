@@ -80,11 +80,15 @@ def movedin():
     if char == 'p':
         variables.LEVEL_CHANGE_FLAG = 1
         functions.check_powerup_timeout()
+        for p in variables.powerups:
+            p.clear()
+            p.change_status_to_0()
         variables.ball.reset()
         variables.paddle.reset()
 
 
     if char == 'x' and variables.SHOOT_FLAG == 1:
+        os.system('aplay -q ./sounds/shoot.wav&')
         functions.shoot_bullets()
 
     
