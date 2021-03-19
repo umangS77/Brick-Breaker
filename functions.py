@@ -313,7 +313,10 @@ def powerup_fall(powerup):
         powerup.inc_vy(0.01)
         powerup.y_change(powerup.get_vy())
         # v = int()
+        if powerup.x_coord() >= variables.mp.width - 1:
+            powerup.rev_vx()
         powerup.x_change(powerup.get_vx())
+
 
         check_powerup(powerup)
         if(powerup.y_coord() > variables.paddle_base+1):
@@ -329,8 +332,8 @@ def check_powerup(powerup):
 def perform_powerup(powerup):
     os.system('aplay -q ./sounds/powerup.wav&')
     if powerup.get_type() == '?':
-        variables.BALL_SPEED_X += 0.1
-        variables.BALL_SPEED_Y += 0.1
+        variables.BALL_SPEED_X += 0.02
+        variables.BALL_SPEED_Y += 0.02
         variables.POWERUP_TIME_FAST = variables.TIME_REM - variables.POWERUP_DURATION
     elif powerup.get_type() == '>':
         variables.paddle.expand_shape()

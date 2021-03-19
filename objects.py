@@ -770,12 +770,6 @@ class PowerUp(Object):
     def inc_vy(self,v):
         self._vy += v
 
-    def y_change_under_gravity(self):
-        self._vy -= 0.1
-        self._posy -= self._vy
-
-
-
     def clear(self):
         for i in range(self._width):
             for j in range(self._height):
