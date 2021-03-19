@@ -1,4 +1,4 @@
-from variables import paddle, ball
+from variables import paddle, ball, ufo
 import variables
 import functions
 import config
@@ -68,12 +68,17 @@ def movedin():
         right_limit = 1090
         if paddle.x_coord() <= left_limit and paddle.x_coord() <= right_limit:
             paddle.x_change(1)
+            if variables.UFO_FLAG == 1:
+                ufo.x_change(1)
             if ball.get_status() == 0:
                 ball.x_change(1)
 
     if char == 'a':
         if paddle.x_coord() > variables.mp.start_index :
             paddle.x_change(-1)
+            if variables.UFO_FLAG == 1:
+                ufo.x_change(-1)
+
             if ball.get_status() == 0:
                 ball.x_change(-1)
 
@@ -83,8 +88,21 @@ def movedin():
         for p in variables.powerups:
             p.clear()
             p.change_status_to_0()
+
+        for b in variables.bullets:
+            b.change_status_to_0()
+            b.clear()
         variables.ball.reset()
         variables.paddle.reset()
+
+    # if char == 'l':
+    #     variables.ufo.dec_lives()
+    #     if variables.ufo._lives <= 0:
+    #         os.system('aplay -q ./sounds/bricks_explode.wav&')
+    #         ufo.change_status_to_0()
+    #         variables.paddle.inc_score(10)
+    #         variables.UFO_FLAG = 0
+
 
 
     if char == 'x' and variables.SHOOT_FLAG == 1:

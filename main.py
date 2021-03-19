@@ -1,6 +1,6 @@
 import variables 
 import functions
-from variables import paddle, ball
+from variables import paddle, ball, ufo
 import inputs
 import random
 import config
@@ -24,9 +24,15 @@ while True:
     
     paddle.clear()
     ball.clear()
+    if variables.UFO_FLAG == 1:
+        ufo.clear()
     inputs.movedin()
     paddle.render()
     ball.render()
+
+
+    if variables.UFO_FLAG == 1:
+        ufo.render()
 
     functions.check_level_change()
     functions.check_ball_base()
@@ -35,18 +41,26 @@ while True:
 
     # if ball.get_status() == 1:
     functions.ball_move(ball)
-
+    functions.drop_bomb()
     for p in variables.powerups:
         if p.get_status() == 1 and p._type != ' ':
             p.render()
             functions.powerup_fall(p)
 
     for b in variables.bullets:
-    	if b.get_status() == 1 and p._type != ' ':
-    		b.render()
-    		functions.bullet_move(b)
-    	else:
-    		b.clear()
+        if b.get_status() == 1 and p._type != ' ':
+            b.render()
+            functions.bullet_move(b)
+        else:
+            b.clear()
+
+
+    for b in variables.bombs:
+        if b.get_status() == 1 and p._type != ' ':
+            b.clear()
+            b.y_change(0.1)
+            if b.check_collision() != 1 and b.get_status() == 1:
+                b.render()
 
 
     functions.check_powerup_timeout()

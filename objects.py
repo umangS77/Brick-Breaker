@@ -149,8 +149,9 @@ class Ball(Object):
             for p in variables.powerups:
                 if (p.x_coord() == int(self._posx) or p.x_coord() == int(self._posx)-1) and  variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] != " ":
                     p.change_status_to_1()
-                    p.set_vx(variables.ball.get_vx)
-                    p.set_vy(variables.ball.get_vy)
+                    p.set_vx(variables.ball.get_vx()*1.2)
+                    p.y_change(2)
+                    p.set_vy(abs(variables.ball.get_vy())*0.3)
 
 
 
@@ -602,6 +603,17 @@ class Ball(Object):
             os.system('aplay -q ./sounds/ball_hit.wav&')
             self.perform_fireball()
 
+        elif variables.mp.matrix[int(j+self._posy)][int(i+self._posx)] == "=":
+            variables.ball.rev_vy()
+            variables.ufo.dec_lives()
+
+            if variables.ufo._lives <= 0:
+                os.system('aplay -q ./sounds/bricks_explode.wav&')
+                ufo.change_status_to_0()
+                variables.paddle.inc_score(10)
+                variables.UFO_FLAG = 0
+
+
 
                 
         
@@ -755,6 +767,9 @@ class PowerUp(Object):
     def get_vy(self):
         return self._vy
 
+    def inc_vy(self,v):
+        self._vy += v
+
     def y_change_under_gravity(self):
         self._vy -= 0.1
         self._posy -= self._vy
@@ -786,6 +801,12 @@ class Bullet(Object):
     def get_status(self):
         return self._status
 
+    def change_status_to_0(self):
+        self._status = 0
+
+    def change_status_to_1(self):
+        self._status = 1
+
 
     def check_collision(self):
         i = int(self._posy)
@@ -808,4 +829,55 @@ class Bullet(Object):
             self.clear()
 
 
+class Ufo(Object):
+    def __init__(self,element,x,y):
+        super().__init__(element,x,y)
+        self._type = element[0][0]
+        self._status = 1
+        # variables.UFO_FLAG = 1
+        self._lives = 5
 
+
+    def dec_lives(self):
+        self._lives -= 1
+
+
+    def change_status_to_0(self):
+        self._status = 0
+
+    def change_status_to_1(self):
+        self._status = 1
+
+
+
+class Bomb(Object):
+    def __init__(self,element,x,y):
+        super().__init__(element,x,y)
+        self._type = element[0][0]
+        self._status = 1
+
+    def change_status_to_0(self):
+        self._status = 0
+
+    def change_status_to_1(self):
+        self._status = 1
+
+    def get_status(self):
+        return self._status
+
+
+    def check_collision(self):
+        if self._status == 1 and self.y_coord() >= variables.paddle.y_coord() - 1 and self.x_coord() >= variables.paddle.x_coord() and self.x_coord() < variables.paddle.x_coord() + variables.paddle.get_width():
+            variables.paddle.dec_lives()
+            os.system('aplay -q ./sounds/lost_life.wav&')
+            self._status = 0
+            if variables.paddle.get_lives() <= 0:
+                os.system('aplay -q ./sounds/game_over.wav&')
+                functions.exit_screen("Lives over!!")
+            return 1
+
+        elif self.y_coord() >= variables.paddle.y_coord():
+            self._status = 0
+
+        return 0
+ 

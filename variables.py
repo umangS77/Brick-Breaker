@@ -39,6 +39,7 @@ LEVEL_CHANGE_FLAG = 0
 BRICK_DROP = 0
 BRICK_FALL_TIME = 40
 
+UFO_FLAG = 0
 
 
 paddle_base = mp.height - len(config.paddle) - 3
@@ -48,7 +49,7 @@ paddle = objects.Paddle(config.paddle, paddle_start, paddle_base, config.lives)
 ball_base = paddle_base-1
 ball_start = paddle_start + 3
 ball = objects.Ball(config.ball, ball_start, ball_base)
-
+ufo = objects.Ufo(config.ufo, paddle_start, 5)
 # powerups = ["?", "@", "U", "<", ">"] # fast through grab expand shrink
 
 powerups = []
@@ -59,4 +60,4 @@ bricks = []
 
 bullets = []
 
-
+bombs = []

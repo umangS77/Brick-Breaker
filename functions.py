@@ -16,9 +16,16 @@ def print_matrix():
     if (variables.POWERUP_TIME_SHOOT == variables.TIME_REM or variables.LEVEL_CHANGE_FLAG == 1 or variables.SHOOT_FLAG == 0):
         temp = "Not activated"
 
+    temp2 = ''
+    if variables.UFO_FLAG == 0:
+        temp2 = 'N/A'
+    else:
+        for i in range(variables.ufo._lives):
+            temp2 = temp2 + '|'
+
     print("\033[2;1H" + Fore.YELLOW +  Style.BRIGHT + 
-    ("LEVEL: " + str(variables.LEVEL) + "   |  LIVES: " + str(variables.paddle.get_lives()) + "   |  SCORE: " + str(variables.paddle.score())  + "   |  TIME REMAINING: " +str(variables.TIME_REM) +
-    "   |  Vx: " + str(variables.BALL_SPEED_X) + "   |  Vy: " + str(variables.BALL_SPEED_Y)  + "   |  SHOOT_TIME_LEFT: " + temp)  .center(config.columns), end='')
+    ("LEVEL: " + str(variables.LEVEL) + " | LIVES: " + str(variables.paddle.get_lives()) + " | SCORE: " + str(variables.paddle.score())  + " | TIME REMAINING: " +str(variables.TIME_REM) +
+    " | Vx: " + str(variables.BALL_SPEED_X) + " | Vy: " + str(variables.BALL_SPEED_Y)  + " | SHOOT_TIME_LEFT: " + temp + " | UFO_HEALTH: " + temp2)  .center(config.columns), end='')
     print(Style.RESET_ALL)
     variables.mp.render()
 
@@ -66,20 +73,22 @@ def create_board():
                     variables.bricks.append(brick)
                     brick.render()
                 if f == 1 and i!=9:
-                    j = random.randint(0,8)
+                    j = random.randint(0,10)
                     if j%2==0:
                         variables.powerups_index.append(x)
                         variables.powerups_index.append(x+1)
                         if j == 0:
-                            powerup = objects.PowerUp(config.powerup_shoot,x,y)
+                            powerup = objects.PowerUp(config.powerup_fast,x,y)
                         elif j == 2:
-                            powerup = objects.PowerUp(config.powerup_shoot,x,y)
+                            powerup = objects.PowerUp(config.powerup_through,x,y)
                         elif j == 4:
-                            powerup = objects.PowerUp(config.powerup_shoot,x,y)
+                            powerup = objects.PowerUp(config.powerup_expand,x,y)
                         elif j == 6:
-                            powerup = objects.PowerUp(config.powerup_shoot,x,y)
+                            powerup = objects.PowerUp(config.powerup_shrink,x,y)
                         elif j == 8:
                             powerup = objects.PowerUp(config.powerup_shoot,x,y)
+                        elif j == 10:
+                            powerup = objects.PowerUp(config.powerup_fireball,x,y)
                     # else:
                     #     powerup = objects.PowerUp(config.no_powerup,x,y)
                         variables.powerups.append(powerup)
@@ -115,19 +124,21 @@ def create_board():
                     variables.bricks.append(brick)
                     brick.render()
                 if f == 4 and i!=9:
-                    j = random.randint(0,8)
+                    j = random.randint(0,10)
                     if j%2==0:
                         variables.powerups_index.append(x)
                         variables.powerups_index.append(x+1)
                         if j == 0:
-                            powerup = objects.PowerUp(config.powerup_shrink,x,y)
-                        elif j == 2:
-                            powerup = objects.PowerUp(config.powerup_expand,x,y)
-                        elif j == 4:
-                            powerup = objects.PowerUp(config.powerup_through,x,y)
-                        elif j == 6:
                             powerup = objects.PowerUp(config.powerup_fast,x,y)
+                        elif j == 2:
+                            powerup = objects.PowerUp(config.powerup_through,x,y)
+                        elif j == 4:
+                            powerup = objects.PowerUp(config.powerup_expand,x,y)
+                        elif j == 6:
+                            powerup = objects.PowerUp(config.powerup_shrink,x,y)
                         elif j == 8:
+                            powerup = objects.PowerUp(config.powerup_shoot,x,y)
+                        elif j == 10:
                             powerup = objects.PowerUp(config.powerup_fireball,x,y)
                     # else:
                     #     powerup = objects.PowerUp(config.no_powerup,x,y)
@@ -137,6 +148,12 @@ def create_board():
 
     elif level == 3:
         f=0
+
+        # y = 5
+        # x = variables.paddle.x_coord()
+        # variables.ufo = objects.Ufo(config.ufo,x,y)
+        # variables.ufo.render()
+        variables.UFO_FLAG = 1
         for y in range(10,variables.mp.height - 25, 3):
             for x in range(0,variables.mp.width - 250,3):
                 if x >= v and x <v+21 and f == 4:
@@ -151,7 +168,7 @@ def create_board():
                 #     variables.bricks.append(brick)
                 #     brick.render()
                 else:
-                    i = random.randint(3,9)
+                    i = random.randint(3,15)
                     if i%2 == 0:
                         brick = objects.Brick(config.brick1,x,y,i)
                     elif i == 3:
@@ -160,24 +177,26 @@ def create_board():
                         brick = objects.Brick(config.brick2,x,y,i)
                     elif i == 7:
                         brick = objects.Brick(config.brick3,x,y,i)
-                    elif i == 9:
+                    else:
                         brick = objects.Brick(config.brick_fixed,x,y,i)
                     variables.bricks.append(brick)
                     brick.render()
                 if f == 4 and i!=9:
-                    j = random.randint(0,8)
+                    j = random.randint(0,10)
                     if j%2==0:
                         variables.powerups_index.append(x)
                         variables.powerups_index.append(x+1)
                         if j == 0:
-                            powerup = objects.PowerUp(config.powerup_shrink,x,y)
-                        elif j == 2:
-                            powerup = objects.PowerUp(config.powerup_expand,x,y)
-                        elif j == 4:
-                            powerup = objects.PowerUp(config.powerup_through,x,y)
-                        elif j == 6:
                             powerup = objects.PowerUp(config.powerup_fast,x,y)
+                        elif j == 2:
+                            powerup = objects.PowerUp(config.powerup_through,x,y)
+                        elif j == 4:
+                            powerup = objects.PowerUp(config.powerup_expand,x,y)
+                        elif j == 6:
+                            powerup = objects.PowerUp(config.powerup_shrink,x,y)
                         elif j == 8:
+                            powerup = objects.PowerUp(config.powerup_shoot,x,y)
+                        elif j == 10:
                             powerup = objects.PowerUp(config.powerup_fireball,x,y)
                     # else:
                     #     powerup = objects.PowerUp(config.no_powerup,x,y)
@@ -291,8 +310,11 @@ def powerup_fall(powerup):
         # temp = powerup.get_vy()
         # powerup.y_change_under_gravity()
         # powerup.x_change(powerup.get_vx())
+        powerup.inc_vy(0.01)
+        powerup.y_change(powerup.get_vy())
+        # v = int()
+        powerup.x_change(powerup.get_vx())
 
-        powerup.y_change(0.1)
         check_powerup(powerup)
         if(powerup.y_coord() > variables.paddle_base+1):
             # powerup.clear()
@@ -559,7 +581,7 @@ def exit_screen(message):
 
 def brick_fall():
     j = variables.mp.height - 7
-    while(j > 9 and j < variables.mp.height - 6):
+    while(j > 8 and j < variables.mp.height - 6):
         for i in range(variables.mp.width):
             if(variables.mp.matrix[j][i] != "O" or variables.mp.matrix[j][i] != "@" or variables.mp.matrix[j][i] != ">" or variables.mp.matrix[j][i] != "<" or variables.mp.matrix[j][i] != "?" or variables.mp.matrix[j][i] != "G" or variables.mp.matrix[j][i] != "|"):
                 variables.mp.matrix[j+1][i] = variables.mp.matrix[j][i]
@@ -606,3 +628,12 @@ def bullet_move(bullet):
     # file.write(" " + str(bullet2.y_coord()) + "\n")
     # file.close()
 
+
+def drop_bomb():
+    if variables.UFO_FLAG == 1 and (variables.ufo.x_coord()+1)%3 == 0 and random.randint(0,20) == 2:
+        bomb = objects.Bomb(config.bomb,variables.ufo.x_coord()+3,variables.ufo.y_coord())
+        variables.bombs.append(bomb)
+
+
+def bomb_fall(bomb):
+    bomb.y_change(0.1)
