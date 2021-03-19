@@ -767,6 +767,12 @@ class PowerUp(Object):
     def get_vy(self):
         return self._vy
 
+    def rev_vx(self):
+        self._vx *= -1
+
+    def rev_vy(self):
+        self._vy *= -1
+
     def inc_vy(self,v):
         self._vy += v
 
