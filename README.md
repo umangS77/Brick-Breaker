@@ -1,7 +1,6 @@
 Umang Srivastava  
 2019101090  
 
-DASS Assignment 3 (Extension of Assignment 2)  
 Brick-Breaker : Terminal-based Python Game  
 
 Overview:  
