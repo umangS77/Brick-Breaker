@@ -1,6 +1,3 @@
-Umang Srivastava  
-2019101090  
-
 Brick-Breaker : Terminal-based Python Game  
 
 Overview:  
@@ -65,3 +62,6 @@ Concepts Implemented:
 - Polymorphism - Polymorphism allows us to define methods in the child class with the same name as defined in their parent class.  
 - Abstraction - Abstraction means hiding the complexity and only showing the essential features of the object.  
 - Encapsulation - The idea of wrapping data and the methods that work together as a single entity. Prevents accidental modification of data. Encapsulation is the practical implementation of abstraction.  
+
+Screenshot:
+![](https://drive.google.com/file/d/1c3h-Y6gWrMlCsUk5MXfECAqrrkBNFRxs/view?usp=sharing)
